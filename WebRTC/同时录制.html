@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>录制桌面</title>
+</head>
+
+<body>
+    <h1>使用WebRTC录制屏幕</h1>
+    <button id="record">开始录制</button>
+    <button id="stop">停止录制</button>
+    <script>
+
+        let mediaRecorder
+
+        let buffer = []
+
+
+
+        const contrains = {
+            video: {
+                width: 2712,
+                height: 1220,
+                frameRate: 30,
+            },
+            audio: {
+                noiseSuppression: true,
+                echoCancellation: true
+            },
+        };
+
+
+        document.querySelector('#record').onclick = async () => {
+            const stream1 = await navigator.mediaDevices.getDisplayMedia(contrains)
+
+            const stream2 = await navigator.mediaDevices.getUserMedia(contrains)
+
+            stream2.getAudioTracks().forEach(track => stream1.addTrack(track));
+
+            stream1.getAudioTracks().forEach(track=>console.log(track))
+
+            mediaRecorder = new MediaRecorder(stream1, { mimeType: 'video/webm;codecs=vp8' });
+            mediaRecorder.ondataavailable = data => buffer.push(data.data);
+            mediaRecorder.start(10);
+        }
+
+
+
+
+        document.querySelector('#stop').onclick = () => {
+            let tracks = mediaRecorder.stream.getTracks();
+            console.log(tracks)
+            tracks.forEach(track => track.stop());
+            var blob = new Blob(buffer, { type: 'video/webm' });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.style.display = 'none';
+            a.download = 'record.webm';
+            a.click();
+        }
+    </script>
+</body>
+
+</html>

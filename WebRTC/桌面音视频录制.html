@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>    WebRTC get audio and video devices </title>
+        <style>
+            .none {
+                -webkit-filter: none;
+            }
+
+            .blue {
+                -webkit-filter: blur(3px); 
+            }
+
+            .grayscale {
+                -webkit-filter: grayscale(1);
+            }
+
+            .invert {
+                -webkit-filter: invert(1);
+            }
+
+            .sepia {
+                -webkit-filter: sepia(1);
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Index5.html</h1>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <video autoplay playsinline id="player"></video>
+                    </td>
+                    <td>
+                        <video playsinline id="recplayer"></video>
+                    </td>
+                    <td>
+                        <div id="constraints"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="record">Start Record</button>
+                    </td>
+                    <td>
+                        <button id="recplay" disabled>Start Play</button>
+                    </td>
+                    <td>
+                        <button id="download" disabled>download</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script type="text/javascript" src="桌面音视频录制.js"></script>
+    
+</html>
